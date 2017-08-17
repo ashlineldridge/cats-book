@@ -1,0 +1,3 @@
+include 'ch01'
+
+rootProject.name = 'cats-exercises'

@@ -1,0 +1,39 @@
+ext {
+    scalaVersion = '2.12.1'
+    scalaBuildVersion = '2.12'
+}
+
+allprojects {
+    group = 'com.github.ashlineldridge'
+    version = '0.0.1-SNAPSHOT'
+}
+
+subprojects {
+    apply plugin: 'scala'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    configurations.all {
+        exclude group: 'commons-logging', module: 'commons-logging'
+        exclude group: 'log4j', module: 'log4j'
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    }
+
+    dependencies {
+        compile "org.scala-lang:scala-library:${scalaVersion}"
+        compile "com.typesafe.scala-logging:scala-logging_${scalaBuildVersion}:3.5.0"
+        compile "ch.qos.logback:logback-classic:1.1.7"
+        compile "org.typelevel:cats-core_${scalaBuildVersion}:1.0.0-MF"
+        compile "org.typelevel:cats-effect_${scalaBuildVersion}:0.4"
+        compile "joda-time:joda-time:2.9.3"
+        compile "org.slf4j:jcl-over-slf4j:1.7.21"
+        compile "org.slf4j:log4j-over-slf4j:1.7.21"
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.0.2'
+}
