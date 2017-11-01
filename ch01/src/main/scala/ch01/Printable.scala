@@ -1,5 +1,7 @@
 package ch01
 
+import cats.Show
+
 final case class Cat(name: String, age: Int, colour: String)
 
 sealed trait Printable[A] {
@@ -53,4 +55,16 @@ object BetterSyntax extends App {
 
   val cat = Cat("Toby", 5, "white")
   cat.print
+}
+
+object ShowSyntax extends App {
+
+  import cats.instances.string._
+  import cats.instances.int._
+  import cats.syntax.show._
+
+  implicit val catShow = Show.show[Cat](c => s"${c.name.show} is a ${c.age.show} year-old ${c.colour.show} cat.")
+
+  val cat = Cat("Toby", 5, "white")
+  println(cat.show)
 }
