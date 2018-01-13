@@ -2,8 +2,6 @@ package ch01
 
 import cats.Show
 
-final case class Cat(name: String, age: Int, colour: String)
-
 sealed trait Printable[A] {
   def format(value: A): String
 }

@@ -9,12 +9,15 @@ import simulacrum.typeclass
   def format(value: A): String
 }
 
-object Stringable {
-  object syntax extends Stringable.ToStringableOps
+// Pattern seems to be have a package called syntax and then a file in there called stringable.scala
+object syntax {
+  object stringable extends Stringable.ToStringableOps
 }
 
-object CatInstances {
-  implicit val catPrintable = new Stringable[Cat] {
+// Pattern seems to be have a package called instances and then a file in there called cat.scala which defines
+// implicit instances of typeclasses for Cat objects
+object instances {
+  implicit val catStringable = new Stringable[Cat] {
     def format(c: Cat): String = {
       s"${c.name} is a ${c.age} year-old ${c.colour} cat."
     }
@@ -23,8 +26,8 @@ object CatInstances {
 
 object CatApp extends App {
 
-  import Stringable.syntax._
-  import CatInstances._
+  import syntax.stringable._
+  import instances._
 
   println(Cat("Ashlin", 5, "Black").format)
 
