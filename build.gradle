@@ -1,53 +1,53 @@
+apply plugin: 'scala'
+
+group = 'com.github.ashlineldridge'
+version = '0.0.1-SNAPSHOT'
+
 ext {
     scalaVersion = '2.12.4'
     scalaBuildVersion = '2.12'
 }
 
-allprojects {
-    group = 'com.github.ashlineldridge'
-    version = '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
 }
 
-subprojects {
-    apply plugin: 'scala'
-
-    repositories {
-        mavenLocal()
-        mavenCentral()
-    }
-
-    configurations {
-        scalaCompiler
-    }
-
-    configurations.scalaCompiler.transitive = false
-
-    configurations.all {
-        exclude group: 'commons-logging', module: 'commons-logging'
-        exclude group: 'log4j', module: 'log4j'
-        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
-    }
-
-    dependencies {
-        compile "org.scala-lang:scala-library:${scalaVersion}"
-        compile "com.typesafe.scala-logging:scala-logging_${scalaBuildVersion}:3.5.0"
-        compile "ch.qos.logback:logback-classic:1.1.7"
-        compile "org.typelevel:cats-core_${scalaBuildVersion}:1.0.0-MF"
-        compile "org.typelevel:cats-effect_${scalaBuildVersion}:0.4"
-        compile "com.github.mpilquist:simulacrum_${scalaBuildVersion}:0.11.0"
-        compile "joda-time:joda-time:2.9.3"
-        compile "org.slf4j:jcl-over-slf4j:1.7.21"
-        compile "org.slf4j:log4j-over-slf4j:1.7.21"
-
-        scalaCompiler "org.scalamacros:paradise_${scalaVersion}:2.1.1"
-    }
-
-    def String scalaCompilerOptions="-Xplugin:$configurations.scalaCompiler.singleFile.path"
-    compileScala.scalaCompileOptions.additionalParameters = [scalaCompilerOptions]
-    compileTestScala.scalaCompileOptions.additionalParameters = [scalaCompilerOptions]
+configurations {
+    scalaCompiler
 }
+
+configurations.scalaCompiler.transitive = false
+
+configurations.all {
+    exclude group: 'commons-logging', module: 'commons-logging'
+    exclude group: 'log4j', module: 'log4j'
+    exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+}
+
+dependencies {
+    compile "org.scala-lang:scala-library:${scalaVersion}"
+    compile "com.typesafe.scala-logging:scala-logging_${scalaBuildVersion}:3.7.2"
+    compile "ch.qos.logback:logback-classic:1.1.7"
+    compile "org.typelevel:cats-core_${scalaBuildVersion}:1.0.1"
+    compile "org.typelevel:cats-effect_${scalaBuildVersion}:0.8"
+    compile "com.github.mpilquist:simulacrum_${scalaBuildVersion}:0.11.0"
+    compile "org.spire-math:kind-projector_${scalaBuildVersion}:0.9.4"
+    compile "joda-time:joda-time:2.9.3"
+    compile "org.slf4j:jcl-over-slf4j:1.7.21"
+    compile "org.slf4j:log4j-over-slf4j:1.7.21"
+
+    scalaCompiler "org.scalamacros:paradise_${scalaVersion}:2.1.1"
+    scalaCompiler "org.spire-math:kind-projector_${scalaBuildVersion}:0.9.4"
+}
+
+def scalaCompileOptions = ['-language:implicitConversions', '-language:higherKinds', '-feature']
+project.configurations.scalaCompiler.files.each { scalaCompileOptions += "-Xplugin:${it.path}".toString() }
+compileScala.scalaCompileOptions.additionalParameters = scalaCompileOptions
+compileTestScala.scalaCompileOptions.additionalParameters = scalaCompileOptions
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.2'
+    gradleVersion = '4.4.1'
     distributionType = 'all'
 }

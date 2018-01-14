@@ -1,4 +1,4 @@
-# Cats Exercises
+# Cats Book
 
-Exercises from Underscore.io's Advanced Scala with Cats
+My solutions to the [Scala with Cats](https://underscore.io/books/scala-with-cats/) book.
 
