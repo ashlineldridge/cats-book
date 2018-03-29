@@ -12,7 +12,7 @@ object SuperAdder {
     items.combineAll
 }
 
-object TestApp extends App {
+object SuperAdderApp extends App {
 
   implicit val orderMonoid: Monoid[Order] = new Monoid[Order] {
     def empty: Order = Order(0.0, 0.0)

@@ -27,7 +27,7 @@ object Functors {
 }
 
 
-object TestApp extends App {
+object TreeApp extends App {
 
   import cats.syntax.functor._
   import Functors._
